@@ -1,3 +1,10 @@
+var correct = 0;
+var incorrect = 0;
+var timer = 20;
+
+
+
+
 var questions ={
     q1: { 
         q:{},
