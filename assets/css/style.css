@@ -1,0 +1,21 @@
+body {
+    background-image: url("../images/escheresque_ste_@2X.png");
+    font-family:'Francois One', sans-serif;
+}
+
+.card-title {
+    font-size: 40px;
+    font-weight: bold;
+    text-align: center;
+    margin-top: 10px;
+}
+
+#trivia-card {
+    height: 600px;
+    background-color: whitesmoke;
+}
+
+#start-button {
+    font-size: 26px;
+    margin-top: 150px;
+}
