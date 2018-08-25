@@ -19,3 +19,12 @@ body {
     font-size: 26px;
     margin-top: 150px;
 }
+
+.question {
+    text-align: center;
+    font-size: 24px;
+}
+
+.answer {
+    padding-left: 20px;
+}

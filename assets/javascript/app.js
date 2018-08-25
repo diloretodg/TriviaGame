@@ -1,87 +1,67 @@
 var correct = 0;
 var incorrect = 0;
-var timer = 20;
-var gameStart = false;
+// array of questions
+var questions =[
+    { 
+        q: "this is the question",
+        a: ["this an answer", "this is another", "this one is correct", "this one is not"],
+        gif: url="this is the question gif",
+        rightAnswer: 2,
+    },
+    {
+        q: "this is the question",
+        a: ["this an answer", "this is another", "this one is not", "this one is correct"],
+        gif: url="this is the question gif",
+        rightAnswer: 4,
+    },
+];
+
+var currentQuestionIndex = 0;
+var currentQuestion = questions[currentQuestionIndex];
 
 
-
-
-var questions = [{
-    q1: { 
-        q: "this is the question",
-        a: ["this an answer", "this is another", "this one is correct", "this one is not"],
-        gif: url="this is the question gif",
-        rightAnswer: 2,
-    },
-    q2: {
-        q: "this is the question",
-        a: ["this an answer", "this is another", "this one is correct", "this one is not"],
-        gif: url="this is the question gif",
-        rightAnswer: 2,
-    },
-    q3: {
-        q: "this is the question",
-        a: ["this an answer", "this is another", "this one is correct", "this one is not"],
-        gif: url="this is the question gif",
-        rightAnswer: 2,
-    },
-    q4: {
-        q: "this is the question",
-        a: ["this an answer", "this is another", "this one is correct", "this one is not"],
-        gif: url="this is the question gif",
-        rightAnswer: 2,
-    },
-    q5: {
-        q: "this is the question",
-        a: ["this an answer", "this is another", "this one is correct", "this one is not"],
-        gif: url="this is the question gif",
-        rightAnswer: 2,
-    },
-    q6: {
-        q: "this is the question",
-        a: ["this an answer", "this is another", "this one is correct", "this one is not"],
-        gif: url="this is the question gif",
-        rightAnswer: 2,
-    },
-    q7: {
-        q: "this is the question",
-        a: ["this an answer", "this is another", "this one is correct", "this one is not"],
-        gif: url="this is the question gif",
-        rightAnswer: 2,
-    },
-    q8: {
-        q: "this is the question",
-        a: ["this an answer", "this is another", "this one is correct", "this one is not"],
-        gif: url="this is the question gif",
-        rightAnswer: 2,
-    },
-    q9: {
-        q: "this is the question",
-        a: ["this an answer", "this is another", "this one is correct", "this one is not"],
-        gif: url="this is the question gif",
-        rightAnswer: 2,
-    },
-    q10: {
-        q: "this is the question",
-        a: ["this an answer", "this is another", "this one is correct", "this one is not"],
-        gif: url="this is the question gif",
-        rightAnswer: 2,
+// when called it changes the current question or ends the game if no questions are left
+function nextQuestion() {
+    if (currentQuestionIndex > questions.length) {
+        currentQuestionIndex ++;
+    } else {
+        gameEnd();
     }
-}];
+}
+// displays the current question in the doc
+function questionDisplay() {
+    $("#trivia-question").text(currentQuestion.q).attr("class", "question");
+    for (var i = 0; i < currentQuestion.a.length; i ++) {
+        var answerDiv = $("<div>")
+        .attr("class", "answer")
+        .attr("data-index", i)
+        .text(currentQuestion.a[i]);
+        $("#trivia-answers").append($("<hr>"));
+        $("#trivia-answers").append(answerDiv);
+    };
+    setTimeout(triviaTimeout,1000 * 10);
 
+}
 
+function triviaTimeout() {
+    incorrect ++;
+    console.log("you got this one wrong")
+}
 
-$("#start-button").click(function () {
+// makes guess and checks it
+$(".answer").click(function() {
+    checkGuess($(this).attr("data-index"));
+    nextQuestion();
+})
+
+$("#start-button").click(function() {
     startGame();
-});
+})
 
 function startGame() {
-    gameStart = true;
-    console.log("the game started");
-    pickQuestion();
-    
-}
-
-function questionTimer() {
+    $("#start-button").hide();
+    questionDisplay();
 
 }
+
+
