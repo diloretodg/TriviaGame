@@ -3,7 +3,7 @@ $(document).ready(function() {
     var incorrect = 0;
     var triviaTimer = 15;
     var nextQuestionTimer = 5;
-    var triviaQuestion = $("#tivia-question");
+    var triviaQuestion = $("#trivia-question");
     var triviaAnswers = $("#trivia-answers");
     var correctDisplay = $("correct-display");
     var incorrectDisplay = $("incorrect-display");
@@ -41,7 +41,14 @@ $(document).ready(function() {
 
 
     function makeGuess() {
-        checkGuess($(this).attr("data-index"))
+        checkGuess($(this).attr("data-index"));
+        setTimeout(nextQuestion, 1000 * 5);
+        setDisplay();
+    }
+
+    function nextQuestion() {
+        currentQuestionIndex ++;
+        questionDisplay();
     }
 
 
@@ -56,6 +63,7 @@ $(document).ready(function() {
 
     // displays the current question
     function questionDisplay() {
+        currentQuestion = questions[currentQuestionIndex];
         $("#trivia-question").text(currentQuestion.q).attr("class", "question");
         for (var i = 0; i < currentQuestion.a.length; i ++) {
             var answerDiv = $("<div>")
