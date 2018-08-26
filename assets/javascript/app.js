@@ -5,9 +5,11 @@ $(document).ready(function() {
     var nextQuestionTimer = 5;
     var triviaQuestion = $("#trivia-question");
     var triviaAnswers = $("#trivia-answers");
-    var correctDisplay = $("correct-display");
-    var incorrectDisplay = $("incorrect-display");
+    var correctDisplay = $("#correct-display");
+    var incorrectDisplay = $("#incorrect-display");
+   
     
+    // all of my questions
     var questions =[
         { 
             q: "this is the question",
@@ -19,10 +21,11 @@ $(document).ready(function() {
             q: "this is the next question",
             a: ["this an answer", "this is another", "this one is not", "this one is correct"],
             gif: url="this is the question gif",
-            rightAnswer: 4,
+            rightAnswer: 3,
         },
     ];
     
+    // the current question selected by its index in questions
     var currentQuestionIndex = 0;
     var currentQuestion = questions[currentQuestionIndex];
     
@@ -42,15 +45,32 @@ $(document).ready(function() {
 
     function makeGuess() {
         checkGuess($(this).attr("data-index"));
-        setTimeout(nextQuestion, 1000 * 5);
+        setTimeout(nextQuestion, 1000 * nextQuestionTimer);
         setDisplay();
+        triviaMessage($(this).attr("data-index"));
     }
 
     function nextQuestion() {
+        if (currentQuestionIndex < questions.length)
         currentQuestionIndex ++;
+        setDisplay();
         questionDisplay();
     }
 
+function triviaMessage(val) {
+    var message = $("<div>")
+    currentQuestion = questions[currentQuestionIndex];
+    if (val == currentQuestion.rightAnswer) {
+        message.attr("class", "message win-message");
+        message.text("Correct!! the answer was " + currentQuestion.a[currentQuestion.rightAnswer] + "!");
+        triviaAnswers.append(message);
+    } else {
+        message.attr("class", "message lose-message");
+        $(message).text("...Sorry... the answer was " +  currentQuestion.a[currentQuestion.rightAnswer]);
+        triviaAnswers.append(message);
+    };
+    console.log(message)
+}
 
     function checkGuess(value) {
         if (value == currentQuestion.rightAnswer) {

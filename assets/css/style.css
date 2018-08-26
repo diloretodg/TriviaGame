@@ -28,3 +28,11 @@ body {
 .answer {
     padding-left: 20px;
 }
+
+.win-message {
+    color: green;
+}
+
+.lose-message {
+    color: red;
+}
