@@ -19,7 +19,9 @@ body {
 
 #start-button {
     font-size: 26px;
-    margin: 25% auto;
+    position: absolute;
+    margin: 20%;
+    bottom: 10%;
     width: 50%;
 }
 

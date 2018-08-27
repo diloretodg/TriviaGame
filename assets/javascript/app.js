@@ -10,7 +10,7 @@ var incorrectDisplay = $("#incorrect-display");
 var message = $("<div>")
 var letters = ["A.)", "B.)", "C.)", "D.)"]
 var gameTimer = $("<div>");
-
+var gameTimerCountdown;
 // all questions and relevant info
 var questions = [
     {
@@ -135,7 +135,7 @@ function gameClock(c, fn) {
         .attr("class", "game-timer")
         .text(c));
     var counter = c;
-    var gameTimerCountdown = setInterval(function(){
+    gameTimerCountdown = setInterval(function(){
       gameTimer.text(counter);
       counter--;
       if (counter < 5) {
@@ -160,6 +160,7 @@ function startGame() {
 $(document).on("click", ".answer", makeGuess)
 
 function makeGuess() {
+    clearInterval(gameTimerCountdown);
     checkGuess($(this).attr("data-index"));
     setTimeout(nextQuestionTimer, nextQuestion);
     setDisplay();
