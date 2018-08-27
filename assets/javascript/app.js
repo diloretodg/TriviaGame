@@ -245,9 +245,10 @@ function setDisplay() {
 // creates final page with score and restart button
 function gameOver() {
     setDisplay();
-    var gameOverMessage = $("<div>")
+    var gameOverMessage = $("<div>");
+    var score = (correct / (correct + incorrect) * 100)
     triviaAnswers.append($("<h1>Game Over<h1>").attr("class", "text-center"));
-    if (correct > incorrect) {
+    if (score > 65) {
         gameOverMessage.attr("class", "message win-message")
         .text("Congrats!! Your Score is " + (correct / (correct + incorrect) * 100) +"%");
         message.attr("class", "message win-message");
