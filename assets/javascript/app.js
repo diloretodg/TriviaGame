@@ -1,7 +1,7 @@
 
 var correct = 0;
 var incorrect = 0;
-var triviaTimer = 15;
+var triviaTimer = 20;
 var nextQuestionTimer = 6;
 var triviaQuestion = $("#trivia-question");
 var triviaAnswers = $("#trivia-answers");
@@ -9,9 +9,9 @@ var correctDisplay = $("#correct-display");
 var incorrectDisplay = $("#incorrect-display");
 var message = $("<div>")
 var letters = ["A.)", "B.)", "C.)", "D.)"]
+var gameTimer = $("<div>");
 
-
-// all of my questions
+// all questions and relevant info
 var questions = [
     {
         q: "Where did Lynyrd Skynyrd get their band name from?",
@@ -128,12 +128,32 @@ $("#start-button").click(function() {
     startGame();
 })
 
+// timer function
+
+function gameClock(c, fn) {
+    triviaAnswers.append(gameTimer
+        .attr("class", "game-timer")
+        .text(c));
+    var counter = c;
+    var gameTimerCountdown = setInterval(function(){
+      gameTimer.text(counter);
+      counter--;
+      if (counter < 5) {
+          gameTimer.attr("class", "game-timer text-danger");
+      };
+      if (counter === -1) {
+        console.log("times up");
+        clearInterval(gameTimerCountdown);
+        fn();
+      };
+    }, 1000);
+}
+
 function startGame() {
     $("#start-button").hide();
     currentQuestionIndex = Math.floor(Math.random() * questions.length);
     currentQuestion = questions[currentQuestionIndex];
     questionDisplay();
-
 }
 
 // makes guess and checks it
@@ -141,7 +161,7 @@ $(document).on("click", ".answer", makeGuess)
 
 function makeGuess() {
     checkGuess($(this).attr("data-index"));
-    setTimeout(nextQuestion, 1000 * nextQuestionTimer);
+    setTimeout(nextQuestionTimer, nextQuestion);
     setDisplay();
     triviaMessage($(this).attr("data-index"));
 }
@@ -164,7 +184,7 @@ function triviaMessage(val) {
         message.html("Correct!! The answer is ..." + "<br>" + currentQuestion.a[currentQuestion.rightAnswer - 1] + "!");
         triviaAnswers.append(message);
     } else {
-         if (val == undefined ) {
+        if (val == undefined ) {
             message.attr("class", "message lose-message");
             $(message).html("Time Up! The answer was ..." + "<br>" +   currentQuestion.a[currentQuestion.rightAnswer - 1]);
             triviaAnswers.append(message);
@@ -178,6 +198,7 @@ function triviaMessage(val) {
     triviaAnswers.append($("<p>").
     text(currentQuestion.answerDetails)
     .attr("class", "mx-5"));
+    gameClock(nextQuestionTimer, nextQuestion)
 };
    
 
@@ -188,7 +209,6 @@ function checkGuess(value) {
     } else {
         incorrect ++;
     }
-    console.log(correct + " " + incorrect);
 }
 
 // displays the current question
@@ -203,7 +223,7 @@ function questionDisplay() {
         $("#trivia-answers").append($("<hr>"));
         $("#trivia-answers").append(answerDiv);
     };
-    setTimeout(makeGuess, 1000* triviaTimer)
+    gameClock(triviaTimer, makeGuess);
 }
 
 // updates the score text
@@ -237,5 +257,3 @@ function gameOver() {
     triviaAnswers.append(message);
     message.text("Questions Wrong: " + incorrect);
 }
-
-
