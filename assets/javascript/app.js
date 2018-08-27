@@ -1,8 +1,8 @@
-$(document).ready(function() {
+
     var correct = 0;
     var incorrect = 0;
     var triviaTimer = 15;
-    var nextQuestionTimer = 5;
+    var nextQuestionTimer = 3;
     var triviaQuestion = $("#trivia-question");
     var triviaAnswers = $("#trivia-answers");
     var correctDisplay = $("#correct-display");
@@ -14,7 +14,7 @@ $(document).ready(function() {
     var questions = [
         {
           q: "Where did Lynyrd Skynrd get their band name from?",
-          a: ["A town", "A teacher", "A poem", "A deceased pet"],
+          a: ["Thir Home Town", "Their teacher", "A poem that inspired them", "A deceased but beloved pet"],
           img: url="this is the question img",
           rightAnswer: 2,
         },
@@ -105,8 +105,8 @@ $(document).ready(function() {
       ];
     
     // the current question selected by its index in questions
-    var currentQuestionIndex = 0;
-    var currentQuestion = questions[currentQuestionIndex];
+    var currentQuestionIndex;
+    var currentQuestion;
     
     $("#start-button").click(function() {
         startGame();
@@ -114,6 +114,8 @@ $(document).ready(function() {
     
     function startGame() {
         $("#start-button").hide();
+        currentQuestionIndex = Math.floor(Math.random() * questions.length);
+        currentQuestion = questions[currentQuestionIndex];
         questionDisplay();
     
     }
@@ -129,8 +131,9 @@ $(document).ready(function() {
     }
 
     function nextQuestion() {
-        if (currentQuestionIndex < questions.length) {
-            currentQuestionIndex ++;
+        if ((correct + incorrect) < 10) {
+            questions.splice(questions.indexOf(currentQuestion), 1);
+            currentQuestionIndex = Math.floor(Math.random() * questions.length);
             setDisplay();
             questionDisplay();
         } else {
@@ -140,14 +143,13 @@ $(document).ready(function() {
 
     // this displays the message inbetween questions
     function triviaMessage(val) {
-        currentQuestion = questions[currentQuestionIndex];
         if (val == currentQuestion.rightAnswer) {
             message.attr("class", "message win-message");
-            message.text("Correct!! the answer was " + currentQuestion.a[currentQuestion.rightAnswer] + "!");
+            message.html("Correct!! the answer is ..." + "<br>" + currentQuestion.a[currentQuestion.rightAnswer - 1] + "!");
             triviaAnswers.append(message);
         } else {
             message.attr("class", "message lose-message");
-            $(message).text("...Sorry... the answer was " +  currentQuestion.a[currentQuestion.rightAnswer]);
+            $(message).html("Wrong! the answer was ..." + "<br>" +   currentQuestion.a[currentQuestion.rightAnswer - 1]);
             triviaAnswers.append(message);
         };
     }
@@ -169,7 +171,7 @@ $(document).ready(function() {
         for (var i = 0; i < currentQuestion.a.length; i ++) {
             var answerDiv = $("<div>")
             .attr("class", "answer")
-            .attr("data-index", i)
+            .attr("data-index", i + 1)
             .text(currentQuestion.a[i]);
             $("#trivia-answers").append($("<hr>"));
             $("#trivia-answers").append(answerDiv);
@@ -191,16 +193,21 @@ $(document).ready(function() {
 
     function gameOver() {
         setDisplay();
+        var gameOverMessage = $("<div>")
+        triviaAnswers.append($("<h1>Game Over<h1>"));
         if (correct > incorrect) {
-            var gameOverMessage = $("<div>");
+            gameOverMessage.attr("class", "message win-message")
+            .text("Congrats!! Your Score is " + (correct / (correct + incorrect) * 100) +"%");
             message.attr("class", "message win-message");
         } else {
+            gameOverMessage.attr("class", "message lose-message")
+            .text("Too Bad. Your Score is " + (correct / (correct + incorrect) * 100) +"%");
             message.attr("class", "message lose-message");
         }
-        triviaAnswers.append($("<h1>Game Over<h1>"));
+        triviaAnswers.append(gameOverMessage);
         message.text("Questions Correct: " + correct);
         triviaAnswers.append(message);
         message.text("Questions Wrong: " + incorrect);
-      
-})
+    }
+
 
