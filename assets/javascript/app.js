@@ -46,7 +46,7 @@ function startGame() {
     questions = [
         {
             q: "Where did Lynyrd Skynyrd get their band name from?",
-            a: ["A town", "A teacher", "A poem", "A deceased pet"],
+            a: ["Their Hometown", "Their teacher", "A poem", "A deceased, but beloved pet"],
             img: url="this is the question img",
             rightAnswer: 2,
             answerDetails: "The name Lynyrd Skynyrd comes from their high school gym teacher, Leonard Skinner, who harrassed the boys for having long hair."
