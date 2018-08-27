@@ -17,12 +17,18 @@ body {
     position: relative;
 }
 
-#start-button {
+.start-button {
     font-size: 26px;
     position: absolute;
     margin: 20%;
     bottom: 10%;
     width: 50%;
+}
+
+.restart {
+    margin:0;
+    left: 25%;
+    bottom: 15%
 }
 
 .question {
@@ -31,7 +37,7 @@ body {
 }
 
 .answer {
-    padding-left: 15%;
+    text-align: center;
 }
 
 .message {
