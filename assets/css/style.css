@@ -27,13 +27,13 @@ body {
 }
 
 .answer {
-    padding-left: 20px;
+    padding-left: 15%;
 }
 
 .message {
     text-align: center;
     font-size: 32px;
-    margin-top: 100px;
+    margin-top: 5%;
 }
 
 .win-message {
