@@ -32,7 +32,7 @@ function gameClock(c, fn) {
     if (counter < 3) {
         gameTimer.attr("class", "game-timer text-danger");
     };
-    if (counter == -2) {
+    if (counter == -1) {
         gameTimer.empty();
         clearInterval(gameTimerCountdown);
         fn();
