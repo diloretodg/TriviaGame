@@ -44,7 +44,8 @@ body {
 .message {
     text-align: center;
     font-size: 32px;
-    margin-top: 5%;
+    margin-top: 2%;
+    margin-bottom: 3%;
 }
 
 .win-message {
