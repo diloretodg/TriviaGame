@@ -34,6 +34,7 @@ body {
 .question {
     text-align: center;
     font-size: 24px;
+    margin-bottom: 5%;
 }
 
 .answer {
